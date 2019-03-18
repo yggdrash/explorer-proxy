@@ -1,0 +1,13 @@
+{
+  "name": "sauron",
+  "version": "1.0.0",
+  "description": "YGGDRASH Explorer Server",
+  "main": "index.js",
+  "author": "Luke Hwang",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "elasticsearch": "^15.4.1",
+    "express": "^4.16.4"
+  }
+}
