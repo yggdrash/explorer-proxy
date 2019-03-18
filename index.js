@@ -1,30 +1,10 @@
-const { Client } = require('elasticsearch')
-const client = new Client({ 
-    node: 'http://localhost:9200',
-    log: 'trace'
+const express = require('express')
+const app = express()
+
+app.get('/', (req, res) => {
+    res.send('Welcome to YGGDRASH!')
 })
 
-client.ping({
-    requestTimeout: 30000,
-}, error => {
-    if (error) {
-        console.error('elasticsearch cluster is down!')
-    } else {
-        console.log('Everything is ok')
-    }
-})
-
-client.search({
-    index: 'block',
-    body: {
-        "query": {
-            "match": {
-                "_id": "29"
-              }
-        }
-    }
-}).then(res => {
-    console.log(res.hits.hits[0])
-}).catch(err => {
-    console.error(err)
+app.listen(3000, () => {
+    console.log('Listening on port 3000')
 })
