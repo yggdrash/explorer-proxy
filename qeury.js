@@ -3,6 +3,7 @@ const client = new Client({
     node: 'http://localhost:9200',
     // log: 'trace'
 })
+const INDEX = 'yggdrash'
 
 const Block = {
     ping: () => {
@@ -17,33 +18,16 @@ const Block = {
         })
     },
 
-    search: () => {
-        client.search({
-            index: 'block',
-            body: {
-                "query": {
-                    "match": {
-                        "_id": "29"
-                    }
-                }
-            }
-        }).then(res => {
-            console.log(res.hits.hits[0])
-        }).catch(err => {
-            console.error(err)
-        })   
-    },
-
     count: async () => {
         const { count } = await client.count({
-            index: 'block',
+            index: INDEX,
         })
         return count;
     },
 
     findByIndex: async (index) => {
         const res = await client.search({
-            index: 'block',
+            index: INDEX,
             body: {
                 query: {
                     match: {
@@ -54,6 +38,45 @@ const Block = {
         })
 
         return res.hits.hits[0]._source
+    },
+
+    findById: async (id) => {
+        const res = await client.search({
+            index: INDEX,
+            body: {
+                query: {
+                    match: {
+                        'blockId': id
+                    }
+                }
+            }
+        })
+
+        return res.hits.hits[0]._source
+    },
+
+    findAll: async (from, size) => {
+        const res = await client.search({
+            index: INDEX,
+            body: {
+                from,
+                size,
+                query: {
+                    "match_all": {}
+                },
+                sort: [
+                    {
+                        "header.timestamp": {
+                            order: "desc"
+                        }
+                    }
+                ]
+            }
+        })
+
+        return res.hits.hits.map(item => {
+            return item._source
+        })
     }
 }
 
