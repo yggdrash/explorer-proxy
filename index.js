@@ -15,6 +15,17 @@ app.get('/blocks', async (req, res) => {
     res.send(blocks)
 })
 
+app.get('/blocks/:id', async (req, res) => {
+    let block = await Block.findById(req.params.id)
+    res.send(block)
+})
+
+app.get('/blocks/:id/txs', async (req, res) => {
+    console.log(req.params.id)
+    let txs = await TxQeury.findByBlockId(req.params.id)
+    res.send(txs)
+})
+
 app.get('/txs', async (req, res) => {
     let from = req.query.from || 0
     let size = req.query.size || 20
