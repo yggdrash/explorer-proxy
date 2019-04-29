@@ -26,7 +26,7 @@ const TxQeury = {
                 },
                 sort: [
                     {
-                        "header.timestamp": {
+                        "timestamp": {
                             order: "desc"
                         }
                     }
@@ -98,7 +98,7 @@ const Block = {
             body: {
                 query: {
                     match: {
-                        'header.index': index
+                        'index': index
                     }
                 }
             }
@@ -133,7 +133,7 @@ const Block = {
                 },
                 sort: [
                     {
-                        "header.timestamp": {
+                        "timestamp": {
                             order: "desc"
                         }
                     }

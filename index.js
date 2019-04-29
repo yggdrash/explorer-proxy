@@ -1,38 +1,48 @@
+require('dotenv').config()
+
 const express = require('express')
 const app = express()
-const { Block, TxQeury } = require('./qeury')
+// const mongoose = require('mongoose');
 
-const PORT = 3000
+const levelup = require('levelup');
+const db = levelup('./db');
 
-app.get('/', (req, res) => {
-    res.send('Welcome to YGGDRASH!')
+db.put('name', 'LevelUP', function (err) { 
+    if (err) return console.log('Ooops!', err) 
+    // some kind of I/O error 
+    // 3) fetch by key 
+    
+    db.get('name', function (err, value) { 
+        if (err) return console.log('Ooops!', err) 
+        // likely the key was not found 
+        // ta da! 
+        console.log('name=' + value) 
+    }) 
 })
 
-app.get('/blocks', async (req, res) => {
-    let from = req.query.from || 0
-    let size = req.query.size || 20
-    let blocks = await Block.findAll(from, size)
-    res.send(blocks)
-})
+const bodyParser = require('body-parser');
 
-app.get('/blocks/:id', async (req, res) => {
-    let block = await Block.findById(req.params.id)
-    res.send(block)
-})
+const router = require('./router')(app)
 
-app.get('/blocks/:id/txs', async (req, res) => {
-    console.log(req.params.id)
-    let txs = await TxQeury.findByBlockId(req.params.id)
-    res.send(txs)
-})
+const Schema = mongoose.Schema;
 
-app.get('/txs', async (req, res) => {
-    let from = req.query.from || 0
-    let size = req.query.size || 20
-    let txs = await TxQeury.findAll(from, size)
-    res.send(txs)
-})
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
-app.listen(PORT, () => {
-    console.log(`Listening on port ${PORT}`)
-})
+// mongoose.Promise = global.Promise;
+
+// // CONNECT TO MONGODB SERVER
+// mongoose.connect(process.env.MONGO_URI)
+//   .then(() => console.log('Successfully connected to mongodb'))
+//   .catch(e => console.error(e));
+
+
+  
+
+// const schema = new Schema({
+//     title: String,
+//     author: String,
+//     published_date: { type: Date, default: Date.now  }
+// });
+
+// module.exports = mongoose.model('YGGDRASH', schema);
