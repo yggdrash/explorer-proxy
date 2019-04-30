@@ -1,5 +1,5 @@
 const { Block, TxQeury } = require('./qeury')
-const db = require('./mongodb')
+const db = require('./db')
 const PORT = process.env.PORT || 3000;
 module.exports = function(app) {
     app.get('/', (req, res) => {
@@ -10,15 +10,6 @@ module.exports = function(app) {
         let from = req.query.from || 0
         let size = req.query.size || 20
         let blocks = await Block.findAll(from, size)
-
-        db.put('name', 'LevelUP', function (err) { 
-            if (err) return console.log('Ooops!', err) 
-            db.get('name', function (err, value) { 
-                if (err) return console.log('Ooops!', err) 
-                console.log('name=' + value) 
-            }) 
-        })
-
         res.send(blocks)
     })
     
