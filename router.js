@@ -1,6 +1,5 @@
-const { Block, TxQeury } = require('./qeury')
-const db = require('./db')
-const PORT = process.env.PORT || 3000;
+const { BlockQuery, TxQeury } = require('./qeury')
+const PORT = process.env.PORT || 3000
 module.exports = function(app) {
     app.get('/', (req, res) => {
         res.send('<h1>Welcome to YGGDRASH!</h1>')
@@ -9,12 +8,12 @@ module.exports = function(app) {
     app.get('/blocks', async (req, res) => {
         let from = req.query.from || 0
         let size = req.query.size || 20
-        let blocks = await Block.findAll(from, size)
+        let blocks = await BlockQuery.findAll(from, size)
         res.send(blocks)
     })
     
     app.get('/blocks/:id', async (req, res) => {
-        let block = await Block.findById(req.params.id)
+        let block = await BlockQuery.findById(req.params.id)
         res.send(block)
     })
     

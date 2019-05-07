@@ -1,4 +1,5 @@
 const { Client } = require('elasticsearch')
+
 const client = new Client({ 
     node: 'http://localhost:9200',
     // log: 'trace'
@@ -33,7 +34,7 @@ const TxQeury = {
                 ]
             }
         })
-
+        
         return res.hits.hits.map(item => {
             return item._source
         })
@@ -72,7 +73,7 @@ const TxQeury = {
     }
 }
 
-const Block = {
+const BlockQuery = {
     ping: () => {
         client.ping({
             requestTimeout: 30000,
@@ -147,7 +148,12 @@ const Block = {
     }
 }
 
+const AccountQuery = {
+   
+}
+
 module.exports = {
-    Block,
-    TxQeury
+    BlockQuery,
+    TxQeury,
+    AccountQuery
 }
