@@ -4,6 +4,8 @@ const client = new Client({
     node: 'http://localhost:9200',
     // log: 'trace'
 })
+const branch = "98790b39c9010759bf3a588eb2d5ea5467764b8e"
+const contractVersion = "1319aef6bf061927e9e26fb19da1020f73e01588"
 const INDEX_PREFIX = 'yggdrash'
 const BLOCK_INDEX = `${INDEX_PREFIX}-block`
 const TX_INDEX = `${INDEX_PREFIX}-tx`
@@ -149,7 +151,10 @@ const BlockQuery = {
 }
 
 const AccountQuery = {
-   
+    findByAccount: async (account, ygg) => {
+        return await ygg.client
+            .getBalance(branch, contractVersion, account)
+    }
 }
 
 module.exports = {

@@ -1,5 +1,11 @@
-const { BlockQuery, TxQeury } = require('./qeury')
+const { BlockQuery, TxQeury, AccountQuery } = require('./qeury')
 const PORT = process.env.PORT || 3000
+const { Ygg } = require("@yggdrash/sdk")
+
+let host = process.env.HOST
+let yggdrash_node_port = process.env.YGGDRASH_NODE_PORT
+
+const ygg = new Ygg(new Ygg.providers.HttpProvider(`http://${host}:${yggdrash_node_port}`))
 module.exports = function(app) {
     app.get('/', (req, res) => {
         res.send('<h1>Welcome to YGGDRASH!</h1>')
@@ -13,6 +19,7 @@ module.exports = function(app) {
     })
     
     app.get('/blocks/:id', async (req, res) => {
+        console.log(req.params.id)
         let block = await BlockQuery.findById(req.params.id)
         res.send(block)
     })
@@ -27,9 +34,15 @@ module.exports = function(app) {
         let from = req.query.from || 0
         let size = req.query.size || 20
         let txs = await TxQeury.findAll(from, size)
+        console.log(txs)
         res.send(txs)
     })
     
+    app.get('/query/:account', async (req, res) => {
+        let query = await AccountQuery.findByAccount(req.params.account, ygg)
+        res.send(query)
+    })
+
     app.listen(PORT, () => {
         console.log(`Listening on port ${PORT}`)
         console.log()
