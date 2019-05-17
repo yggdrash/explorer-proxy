@@ -1,11 +1,11 @@
 const { Client } = require('elasticsearch')
 
 const client = new Client({ 
-    node: 'http://localhost:9200',
+    node: process.env.ELASTICSEARCH_NODE,
     // log: 'trace'
 })
-const branch = "98790b39c9010759bf3a588eb2d5ea5467764b8e"
-const contractVersion = "1319aef6bf061927e9e26fb19da1020f73e01588"
+const BRACH_ID = process.env.BRANCH_ID
+const CONTRACT_VERSION = process.env.CONTRACT_VERSION
 const INDEX_PREFIX = 'yggdrash'
 const BLOCK_INDEX = `${INDEX_PREFIX}-block`
 const TX_INDEX = `${INDEX_PREFIX}-tx`
@@ -15,7 +15,7 @@ const TxQeury = {
         const { count } = await client.count({
             index: TX_INDEX
         })
-        return count;
+        return count
     },
 
     findAll: async (from, size) => {
@@ -72,6 +72,22 @@ const TxQeury = {
         return res.hits.hits.map(item => {
             return item._source
         })
+    },
+
+    findByAccount: async (author) => {
+        const res = await client.search({
+            index: TX_INDEX,
+            body: {
+                query: {
+                    match: {
+                        author
+                    }
+                }
+            }
+        })
+        return res.hits.hits.map(item => {
+            return item._source
+        })
     }
 }
 
@@ -125,7 +141,7 @@ const BlockQuery = {
         return res.hits.hits[0]._source
     },
 
-    findAll: async (from, size) => {
+    findAll: async (from, size, index) => {
         const res = await client.search({
             index: BLOCK_INDEX,
             body: {
@@ -144,16 +160,49 @@ const BlockQuery = {
             }
         })
 
+        if(index) {
+            console.log(index)
+        }
+
         return res.hits.hits.map(item => {
             return item._source
         })
-    }
+    },
+
+    // findRangeAll: async (from, size, index) => {
+    //     const res = await client.search({
+    //         index: BLOCK_INDEX,
+    //         body: {
+    //             from,
+    //             size,
+    //             query: {
+    //                 "range": {
+    //                     "index": {
+    //                         "gte": index,
+    //                         "lte": index + 20
+    //                     }
+    //                 }
+    //             },
+    //             sort: [
+    //                 {
+    //                     "timestamp": {
+    //                         order: "desc"
+    //                     }
+    //                 }
+    //             ]
+    //         }
+    //     })
+    //
+    //     return res.hits.hits.map(item => {
+    //         return item._source
+    //     })
+    // },
 }
 
 const AccountQuery = {
     findByAccount: async (account, ygg) => {
         return await ygg.client
-            .getBalance(branch, contractVersion, account)
+            .getBalance(BRACH_ID, CONTRACT_VERSION, account)
     }
 }
 

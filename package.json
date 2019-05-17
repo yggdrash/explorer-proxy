@@ -8,16 +8,20 @@
   "private": true,
   "scripts": {
     "start": "node index.js",
+    "stop": "node index.stop.js",
     "test": "mocha tests/*.test.js"
   },
   "dependencies": {
     "@yggdrash/sdk": "^0.2.0",
+    "bignumber.js": "^8.1.1",
     "body-parser": "^1.19.0",
     "dotenv": "^7.0.0",
     "elasticsearch": "^15.4.1",
     "express": "^4.16.4",
     "http": "^0.0.0",
+    "node-cron": "^2.0.3",
     "socket.io": "^2.2.0",
+    "socket.io-client": "^2.2.0",
     "websocket": "^1.0.28"
   },
   "devDependencies": {
