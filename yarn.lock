@@ -546,6 +546,14 @@ ee-first@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/ee-first/-/ee-first-1.1.1.tgz#590c61156b0ae2f4f0255732a158b266bc56b21d"
 
+elasticsearch-cacheable@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/elasticsearch-cacheable/-/elasticsearch-cacheable-1.0.1.tgz#716fda8a9be0cace37ef7e9bf1a067758e0f2d7b"
+  dependencies:
+    lodash "^2.4.1"
+    object-hash "^0.4.0"
+    redis "^0.12.1"
+
 elasticsearch@^15.4.1:
   version "15.4.1"
   resolved "https://registry.yarnpkg.com/elasticsearch/-/elasticsearch-15.4.1.tgz#28b54de22fea74003e57395e035926fe7b63b8dd"
@@ -1262,6 +1270,10 @@ locate-path@^3.0.0:
     p-locate "^3.0.0"
     path-exists "^3.0.0"
 
+lodash@^2.4.1:
+  version "2.4.2"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-2.4.2.tgz#fadd834b9683073da179b3eae6d9c0d15053f73e"
+
 lodash@^4.17.10, lodash@^4.17.11:
   version "4.17.11"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
@@ -1496,6 +1508,10 @@ object-copy@^0.1.0:
     define-property "^0.2.5"
     kind-of "^3.0.3"
 
+object-hash@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/object-hash/-/object-hash-0.4.0.tgz#832084230147913d38ec85d80a9057901853b8cc"
+
 object-keys@^1.0.11, object-keys@^1.0.12:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/object-keys/-/object-keys-1.1.0.tgz#11bd22348dd2e096a045ab06f6c85bcc340fa032"
@@ -1667,6 +1683,10 @@ raw-body@2.4.0:
     http-errors "1.7.2"
     iconv-lite "0.4.24"
     unpipe "1.0.0"
+
+redis@^0.12.1:
+  version "0.12.1"
+  resolved "https://registry.yarnpkg.com/redis/-/redis-0.12.1.tgz#64df76ad0fc8acebaebd2a0645e8a48fac49185e"
 
 regex-not@^1.0.0, regex-not@^1.0.2:
   version "1.0.2"

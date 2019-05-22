@@ -17,6 +17,7 @@
     "body-parser": "^1.19.0",
     "dotenv": "^7.0.0",
     "elasticsearch": "^15.4.1",
+    "elasticsearch-cacheable": "^1.0.1",
     "express": "^4.16.4",
     "http": "^0.0.0",
     "node-cron": "^2.0.3",

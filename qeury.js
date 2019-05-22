@@ -1,4 +1,9 @@
 const { Client } = require('elasticsearch')
+// const esClient = require('elasticsearch').Client();
+// require('./elasticsearch-cacheable')(esClient, {
+//     redisHost: '10.10.10.10',
+//     cacheTime: 3
+// });
 
 const client = new Client({ 
     node: process.env.ELASTICSEARCH_NODE,

@@ -43,13 +43,15 @@ module.exports = function(app) {
     
     app.get('/txs', async (req, res) => {
         let from = req.query.from || 0
-        // let size = req.query.size || 10000000
-        let size = req.query.size || 10000
+        let size = req.query.size || 20
         let txs = await TxQeury.findAll(from, size)
-        // for(let i in txs) {
-        //     txs[i].put("body", JSON.parse(txs[i].body))
-        // }
         res.send(txs)
+    })
+
+    app.get('/txs/count', async (req, res) => {
+        let count = await TxQeury.count()
+        result = { count }
+        res.send(result)
     })
 
     app.get('/txs/:txid', async (req, res) => {
@@ -60,11 +62,10 @@ module.exports = function(app) {
     //TODO: Account query
     app.get('/query/:account', async (req, res) => {
         let balance = await getBalance(req.params.account)
-        console.log("b")
-        console.log(balance)
+        result = { balance }
         // let query = await AccountQuery.findByAccount(req.params.account, ygg)
         // let txs = await TxQeury.findByAccount(req.params.address)
-        // res.send(txs)
+        res.send(result)
     })
 
     app.get('/account/:address', async (req, res) => {
